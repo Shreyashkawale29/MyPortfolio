@@ -2,13 +2,14 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 
+
 const userSchema = new mongoose.Schema({
-    firstname:{
+    fname:{
         type:String,
         required:true,
         trim:true
     },
-    lastname:{
+    lname:{
         type:String,
         required:true,
         trim:true
@@ -21,21 +22,21 @@ const userSchema = new mongoose.Schema({
             if(!validator.isEmail(value)){
                 throw new Error("invalid email")
             }
-        }
-    },
+            }
+        },
     mobile:{
         type:String,
         required:true,
         // unique:true,
     },
-    messages:[]
+    message:[]
 })
 
 
 // save message
 userSchema.methods.Messagesave = async function(message){
     try {
-        this.messages = this.messages.concat({message});
+        this.message = this.message.concat({message});
         await this.save();
         return message;
     } catch (error) {
@@ -47,4 +48,3 @@ userSchema.methods.Messagesave = async function(message){
 const users = new mongoose.model("users",userSchema);
 
 module.exports = users;
-
